@@ -20,6 +20,18 @@ $http.beforeRequest = function(options) {
 	uni.showLoading({
 		title: '数据加载中...'
 	})
+
+	// console.log('options', options)
+	// console.log('store', store)
+
+	// 判断请求的是否为有权限的API接口
+	if (options.url.indexOf('/my/') !== -1) {
+		// 为请求头添加身份认证字段
+		options.header = {
+			// 字段的值可以直接从vuex中进行获取
+			Authorization: store.state.m_user.token,
+		}
+	}
 }
 
 // 配置响应拦截器，关闭提示
